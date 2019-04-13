@@ -22,12 +22,12 @@ namen = ''
 @app.route('/')
 def index():
     method1 = 'Harcascade'
-    method2 = 'Convolution Neural Network'
+    method2 = 'Convolution_Neural_Network'
     method3 = 'K_Nearest_Neighbour'
     return render_template('index.html',m1 = method1,m2 = method2, m3 = method3)
 
-@app.route('/gen/Harcascade')
-def generic(name='Harcascade'):
+@app.route('/gen/<name>')
+def generic(name):
     namen=name
     return render_template('generic.html',name=name)
 
@@ -35,6 +35,9 @@ def generic(name='Harcascade'):
 def generic1(name='K_Nearest_Neighbour'):
     namen='K_Nearest_Neighbour'
     return render_template('generic1.html',name=name)
+
+
+   
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -52,11 +55,12 @@ def upload1():
   file = request.files['image']
   f = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
   file.save(f)
-  res = os.path.abspath('./static/imagek')
-  if glob.glob1(res, '*.jpg') != []:
-        for fil in glob.glob1(res, '*.jpg'):
-            print(os.path.join(res, fil))
-            os.remove(os.path.join(res, fil))
+  
+  res1 = os.path.abspath('./static/imagek')
+  if glob.glob1(res1, '*.jpg') != []:
+        for fil in glob.glob1(res1, '*.jpg'):
+            print(os.path.join(res1, fil))
+            os.remove(os.path.join(res1, fil))
 
 
   for image_file in os.listdir('image1'):
@@ -78,8 +82,13 @@ def upload1():
         # Display results overlaid on an image
         knn_test.show_prediction_labels_on_image(os.path.join('image1', image_file), predictions,image_file)
         
-        res = os.path.abspath('.static/imagek')
-        files = glob.glob1(res, '*.jpg')
+        res1 = os.path.abspath('.static/imagek')
+        files = glob.glob1(res1, '*.jpg')
+        res = os.path.abspath('./image1')
+        if glob.glob1(res, '*.jpg') != []:
+            for fil in glob.glob1(res, '*.jpg'):
+               print(os.path.join(res, fil))
+               os.remove(os.path.join(res, fil))
         return render_template('generic1.html',name=namen)
 
 
